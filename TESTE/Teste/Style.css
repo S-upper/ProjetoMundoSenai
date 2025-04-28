@@ -1,50 +1,86 @@
 * {
-    font-family: verdana;
-  }
-  
-  h1 {
-      text-align: center;
-  }
-  div {
-      text-align: center;
-  }
-  table {
-      margin: 1em auto;
-      border-collapse: collapse;
-  }
-  td {
-      border: 1px solid black;
-      width: 30px;
-      height: 30px;
-      text-align: center;
-  }
-  .blocked, .flag {
-      background: lightgray;    
-  }
-  .n1, .n2, .n3, .n4, .n5, .n6, .n7, .n8 {
-      background-color: #eee;
-  }
-  .n1 {
-      color: blue;
-  }
-  .n2 {
-      color: green;
-  }
-  .n3 {
-      color: red;
-  }
-  .n4 {
-      color: maroon;
-  }
-  .n5 {
-      color: blueviolet;
-  }
-  .n6 {
-      color: darkgoldenrod;
-  }
-  .n7 {
-      color: orange;
-  }
-  .n8 {
-      color: tomato;
-  }
+    font-family: Verdana, sans-serif;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 1em;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 0.5em;
+}
+
+#medidasContainer {
+    display: inline-block;
+    margin-bottom: 1em;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+td, th {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.axis-label {
+    background-color: #ddd;
+    font-weight: bold;
+}
+
+.axis {
+    background-color: #bbb;
+}
+
+.cell.blocked {
+    background-color: #ccc;
+    cursor: default;
+}
+
+.cell.revealed {
+    background-color: #eee;
+}
+
+.cell.flag {
+    background-color: #ffd;
+    cursor: default;
+}
+
+.axis-horizontal {
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.axis-vertical {
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+.n1 { color: blue; }
+.n2 { color: green; }
+.n3 { color: red; }
+.n4 { color: navy; }
+.n5 { color: maroon; }
+.n6 { color: darkgoldenrod; }
+.n7 { color: black; }
+.n8 { color: gray; }
+
+.controls {
+    margin-top: 1em;
+}
+
+.controls label,
+.controls input,
+.controls select,
+.controls button {
+    margin: 0 0.3em;
+    font-size: 1em;
+}

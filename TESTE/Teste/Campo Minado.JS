@@ -1,255 +1,202 @@
-var linhas, colunas, bombas, matriz, tabela;
+let linhas, colunas, bombas, matriz, tabela;
+let xLabels = [], yLabels = [];
+let xStart, yStart;
+
 function gerarMatriz(l, c) {
     matriz = [];
-    for (var i = 0; i < l; i++) {
-        matriz[i] = new Array(c).fill(0);
+    for (let i = 0; i < l; i++) {
+        matriz[i] = Array(c).fill(0);
     }
-    console.log(matriz);
 }
+
+function gerarLabels() {
+    xStart = -Math.floor(colunas / 2);
+    xLabels = [];
+    for (let j = 0; j < colunas; j++) {
+        xLabels.push(xStart + j);
+    }
+    yStart = Math.floor(linhas / 2);
+    yLabels = [];
+    for (let i = 0; i < linhas; i++) {
+        yLabels.push(yStart - i);
+    }
+}
+
 function gerarTabela(l, c) {
     gerarMatriz(l, c);
-    var str = "";
-    for (var i = 0; i < l; i++) {
-        str += "<tr>";
-        for (var j = 0; j < c; j++) {
-            str += "<td class='blocked'></td>";
+    gerarLabels();
+
+    let html = "<tr><td></td>";
+    xLabels.forEach(x => {
+        html += `<th class="${x === 0 ? 'axis-label axis' : 'axis-label'}">${x}</th>`;
+    });
+    html += "</tr>";
+
+    for (let i = 0; i < linhas; i++) {
+        const y = yLabels[i];
+        html += `<tr><th class="${y === 0 ? 'axis-label axis' : 'axis-label'}">${y}</th>`;
+        for (let j = 0; j < colunas; j++) {
+            let classes = ['cell', 'blocked'];
+            if (xLabels[j] === 0) classes.push('axis-vertical');
+            if (y === 0) classes.push('axis-horizontal');
+            html += `<td class="${classes.join(' ')}" data-i="${i}" data-j="${j}"></td>`;
         }
-        str += "</tr>";
+        html += `</tr>`;
     }
-    tabela.innerHTML = str;
+
+    tabela.innerHTML = html;
 }
-function mostrarMatriz() {
-    for (var i = 0; i < linhas; i++) {
-        for (var j = 0; j < colunas; j++) {
-            if (matriz[i][j] === -1) {
-                tabela.rows[i].cells[j].innerHTML = "&#128163;";
-            } else {
-                tabela.rows[i].cells[j].innerHTML = matriz[i][j];
-            }
-        }
-    }
-}
+
 function gerarBombas() {
-    for (var i = 0; i < bombas;) {
-        var linha = Math.floor((Math.random() * linhas));
-        var coluna = Math.floor((Math.random() * colunas));
-        if (matriz[linha][coluna] === 0) {
-            matriz[linha][coluna] = -1;
-            i++;
+    let colocadas = 0;
+    while (colocadas < bombas) {
+        const i = Math.floor(Math.random() * linhas);
+        const j = Math.floor(Math.random() * colunas);
+        if (matriz[i][j] === 0) {
+            matriz[i][j] = -1;
+            colocadas++;
         }
     }
 }
-function gerarNumero(l, c) {
-    var count = 0;
-    for (var i = l - 1; i <= l + 1; i++) {
-        for (var j = c - 1; j <= c + 1; j++) {
-            if (i >= 0 && i < linhas && j >= 0 && j < colunas) {
-                if (matriz[i][j] === -1) {
-                    count++;
-                }
-            }
+
+function gerarNumero(li, co) {
+    let cnt = 0;
+    for (let i = li - 1; i <= li + 1; i++) {
+        for (let j = co - 1; j <= co + 1; j++) {
+            if (
+                i >= 0 && i < linhas &&
+                j >= 0 && j < colunas &&
+                matriz[i][j] === -1
+            ) cnt++;
         }
     }
-    matriz[l][c] = count;
+    matriz[li][co] = cnt;
 }
+
 function gerarNumeros() {
-    for (var i = 0; i < linhas; i++) {
-        for (var j = 0; j < colunas; j++) {
-            if (matriz[i][j] !== -1) {
-                gerarNumero(i, j);
-            }
+    for (let i = 0; i < linhas; i++) {
+        for (let j = 0; j < colunas; j++) {
+            if (matriz[i][j] !== -1) gerarNumero(i, j);
         }
     }
 }
-function bandeira(event) {
-    var cell = event.target;
-    var linha = cell.parentNode.rowIndex;
-    var coluna = cell.cellIndex;
-    if (cell.className === "blocked") {
-        cell.className = "flag";
-        cell.innerHTML = "&#128681;";//&#9873;
-    } else if (cell.className === "flag") {
-        cell.className = "blocked";
-        cell.innerHTML = "";
+
+function revelarCelula(i, j) {
+    const cell = tabela.rows[i + 1].cells[j + 1];
+    if (matriz[i][j] === -1) {
+        cell.innerHTML = "💣";
+        cell.classList.add('revealed');
+        return false;
     }
-    return false;
-}
-function init() {
-    tabela = document.getElementById("tabela");
-    tabela.onclick = verificar;
-    tabela.oncontextmenu = bandeira;
-    var diff = document.getElementById("dificuldade");
-    switch (parseInt(diff.value)) {
-        case 0:
-            linhas = 9;
-            colunas = 9;
-            bombas = 10;
-            break;
-        case 1:
-            linhas = 16;
-            colunas = 16;
-            bombas = 40;
-            break;
-        default:
-            linhas = 16;
-            colunas = 30;
-            bombas = 99;
-            break;
+    if (matriz[i][j] === 0) {
+        limparCelulas(i, j);
+    } else {
+        cell.innerHTML = matriz[i][j];
+        cell.classList.add('n' + matriz[i][j], 'revealed');
     }
-    gerarTabela(linhas, colunas);
-    gerarBombas();
-    gerarNumeros();
-    //    mostrarMatriz();
+    return true;
 }
-function limparCelulas(l, c) {
-    for (var i = l - 1; i <= l + 1; i++) {
-        for (var j = c - 1; j <= c + 1; j++) {
+
+function limparCelulas(li, co) {
+    for (let i = li - 1; i <= li + 1; i++) {
+        for (let j = co - 1; j <= co + 1; j++) {
             if (i >= 0 && i < linhas && j >= 0 && j < colunas) {
-                var cell = tabela.rows[i].cells[j];
-                if (cell.className !== "blank") {
-                    switch (matriz[i][j]) {
-                        case -1:
-                            break;
-                        case 0:
-                            cell.innerHTML = "";
-                            cell.className = "blank";
-                            limparCelulas(i, j);
-                            break;
-                        default:
-                            cell.innerHTML = matriz[i][j];
-                            cell.className = "n" + matriz[i][j];
+                const cell = tabela.rows[i + 1].cells[j + 1];
+                if (!cell.classList.contains('revealed')) {
+                    if (matriz[i][j] === 0) {
+                        cell.classList.add('revealed');
+                        limparCelulas(i, j);
+                    } else if (matriz[i][j] > 0) {
+                        cell.innerHTML = matriz[i][j];
+                        cell.classList.add('n' + matriz[i][j], 'revealed');
                     }
                 }
             }
         }
     }
 }
+
+function toggleFlag(i, j) {
+    const cell = tabela.rows[i + 1].cells[j + 1];
+    if (cell.classList.contains('revealed')) return;
+    if (!cell.classList.contains('flag')) {
+        cell.classList.remove('blocked');
+        cell.classList.add('flag');
+        cell.innerHTML = "🚩";
+    } else {
+        cell.classList.remove('flag');
+        cell.classList.add('blocked');
+        cell.innerHTML = "";
+    }
+}
+
 function mostrarBombas() {
-    for (var i = 0; i < linhas; i++) {
-        for (var j = 0; j < colunas; j++) {
+    for (let i = 0; i < linhas; i++) {
+        for (let j = 0; j < colunas; j++) {
             if (matriz[i][j] === -1) {
-                var cell = tabela.rows[i].cells[j];
-                cell.innerHTML = "&#128163;";
-                cell.className = "blank";
+                const cell = tabela.rows[i + 1].cells[j + 1];
+                cell.innerHTML = "💣";
+                cell.classList.add('revealed');
             }
         }
     }
 }
-function verificar(event) {
-    var cell = event.target;
-    if (cell.className !== "flag") {
-        var linha = cell.parentNode.rowIndex;
-        var coluna = cell.cellIndex;
-        switch (matriz[linha][coluna]) {
-            case -1:
-                mostrarBombas();
-                cell.style.backgroundColor = "red";
-                tabela.onclick = undefined;
-                tabela.oncontextmenu = undefined;
-                alert("Você perdeu!");
-                break;
-            case 0:
-                limparCelulas(linha, coluna);
-                break;
-            default:
-                cell.innerHTML = matriz[linha][coluna];
-                cell.className = "n" + matriz[linha][coluna];
-        }
-        fimDeJogo();
-    }
-}
-function fimDeJogo() {
-    var cells = document.querySelectorAll(".blocked, .flag");
-    if (cells.length === bombas) {
+
+function fimDeJogo(venceu) {
+    document.getElementById('jogar').disabled = true;
+    if (!venceu) {
         mostrarBombas();
-        tabela.onclick = undefined;
-        tabela.oncontextmenu = undefined;
+        alert("Você perdeu!");
+    } else {
         alert("Você venceu!");
     }
 }
-function registerEvents() {
-    init();
-    var diff = document.getElementById("dificuldade");
-    diff.onchange = init;
-}
-onload = registerEvents;
 
-function gerarTabela(l, c) {
-    gerarMatriz(l, c);
-    var str = "";
-    for (var i = 0; i < l; i++) {
-        str += "<tr>";
-        for (var j = 0; j < c; j++) {
-            // Criando as células com atributos 'data-x' e 'data-y' para o plano cartesiano
-            str += "<td class='blocked' data-x='" + i + "' data-y='" + j + "'></td>";
-        }
-        str += "</tr>";
+function jogar() {
+    const x = parseInt(document.getElementById('inputX').value, 10);
+    const y = parseInt(document.getElementById('inputY').value, 10);
+    const action = document.getElementById('acao').value;
+
+    const i = yStart - y;
+    const j = x - xStart;
+
+    if (i < 0 || i >= linhas || j < 0 || j >= colunas) {
+        alert("Coordenada fora do plano!");
+        return;
     }
-    tabela.innerHTML = str;
-}
 
-function verificar(event) {
-    var cell = event.target;
-    if (cell.className !== "flag") {
-        var linha = cell.parentNode.rowIndex;
-        var coluna = cell.cellIndex;
-        
-        // Exibe as coordenadas da célula clicada no console
-        console.log("Célula clicada: Linha " + linha + ", Coluna " + coluna);
-        
-        switch (matriz[linha][coluna]) {
-            case -1:
-                mostrarBombas();
-                cell.style.backgroundColor = "red";
-                tabela.onclick = undefined;
-                tabela.oncontextmenu = undefined;
-                alert("Você perdeu!");
-                break;
-            case 0:
-                limparCelulas(linha, coluna);
-                break;
-            default:
-                cell.innerHTML = matriz[linha][coluna];
-                cell.className = "n" + matriz[linha][coluna];
+    if (action === 'revelar') {
+        if (!revelarCelula(i, j)) {
+            fimDeJogo(false);
+            return;
         }
-        fimDeJogo();
-    }
-}
+        // checa vitória: todas células não-bomba reveladas
+        const restantes = Array.from(
+            document.querySelectorAll('td.cell.blocked')
+        ).filter(td => !td.classList.contains('revealed')).length;
+        if (restantes === bombas) fimDeJogo(true);
 
-function mostrarCoordenadas(event) {
-    var cell = event.target;
-    if (cell.className !== "flag" && cell.className !== "blocked") {
-        var x = cell.getAttribute('data-x');
-        var y = cell.getAttribute('data-y');
-        console.log("Coordenadas da célula: (" + x + ", " + y + ")");
+    } else { // bandeira
+        toggleFlag(i, j);
     }
 }
 
 function init() {
-    tabela = document.getElementById("tabela");
-    tabela.onclick = verificar;
-    tabela.oncontextmenu = bandeira;
-    tabela.onmouseover = mostrarCoordenadas; // Evento de passar o mouse
-    
-    var diff = document.getElementById("dificuldade");
-    switch (parseInt(diff.value)) {
-        case 0:
-            linhas = 9;
-            colunas = 9;
-            bombas = 10;
-            break;
-        case 1:
-            linhas = 16;
-            colunas = 16;
-            bombas = 40;
-            break;
-        default:
-            linhas = 16;
-            colunas = 30;
-            bombas = 99;
-            break;
-    }
+    tabela = document.getElementById('tabela');
+    document.getElementById('jogar').disabled = false;
+
+    const diff = parseInt(document.getElementById('dificuldade').value, 10);
+    if (diff === 0)      { linhas = 9;  colunas = 9;  bombas = 10; }
+    else if (diff === 1) { linhas = 16; colunas = 16; bombas = 40; }
+    else                 { linhas = 16; colunas = 30; bombas = 99; }
+
     gerarTabela(linhas, colunas);
     gerarBombas();
     gerarNumeros();
 }
+
+window.onload = () => {
+    init();
+    document.getElementById('dificuldade').onchange = init;
+    document.getElementById('jogar').onclick = jogar;
+};

@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Campo Minado Cartesiano</title>
     <link rel="stylesheet" href="./Style.css">
     <script defer src="./Campo Minado.JS"></script>
 </head>
+
 <body>
     <h1>Campo Minado Cartesiano</h1>
     <div id="medidasContainer">
         <table id="tabela"></table>
+
+        <div class="Controles">
+            <label for="inputX">Y:</label>
+            <input type="number" id="inputX" value="0" />
+
+            <label for="inputY">X:</label>
+            <input type="number" id="inputY" value="0" />
+
+            <button id="jogar">Jogar</button>
+        </div>
     </div>
 
     <div class="controls">
@@ -25,14 +37,7 @@
             <option value="revelar" selected>Revelar</option>
             <option value="bandeira">Bandeira</option>
         </select>
-
-        <label for="inputX">X:</label>
-        <input type="number" id="inputX" value="0" />
-
-        <label for="inputY">Y:</label>
-        <input type="number" id="inputY" value="0" />
-
-        <button id="jogar">Jogar</button>
     </div>
 </body>
+
 </html>

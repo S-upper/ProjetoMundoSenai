@@ -1,6 +1,7 @@
 * {
     font-family: Verdana, sans-serif;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -14,8 +15,19 @@ h1 {
 }
 
 #medidasContainer {
-    display: inline-block;
-    margin-bottom: 1em;
+    display: flex;
+    position: relative;
+}
+
+.Controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    margin-right: 20vw;
+    top: 6rem;
 }
 
 table {
@@ -23,7 +35,8 @@ table {
     margin: 0 auto;
 }
 
-td, th {
+td,
+th {
     width: 30px;
     height: 30px;
     border: 1px solid #333;
@@ -64,14 +77,37 @@ td, th {
     border-right: 2px solid #000;
 }
 
-.n1 { color: blue; }
-.n2 { color: green; }
-.n3 { color: red; }
-.n4 { color: navy; }
-.n5 { color: maroon; }
-.n6 { color: darkgoldenrod; }
-.n7 { color: black; }
-.n8 { color: gray; }
+.n1 {
+    color: blue;
+}
+
+.n2 {
+    color: green;
+}
+
+.n3 {
+    color: red;
+}
+
+.n4 {
+    color: navy;
+}
+
+.n5 {
+    color: maroon;
+}
+
+.n6 {
+    color: darkgoldenrod;
+}
+
+.n7 {
+    color: black;
+}
+
+.n8 {
+    color: gray;
+}
 
 .controls {
     margin-top: 1em;

@@ -170,7 +170,9 @@ function jogar() {
             fimDeJogo(false);
             return;
         }
-        // checa vitória: todas células não-bomba reveladas
+        const cell = tabela.rows[i + 1].cells[j + 1];
+
+        cell.style.backgroundColor = 'pink';
         const restantes = Array.from(
             document.querySelectorAll('td.cell.blocked')
         ).filter(td => !td.classList.contains('revealed')).length;
@@ -186,9 +188,9 @@ function init() {
     document.getElementById('jogar').disabled = false;
 
     const diff = parseInt(document.getElementById('dificuldade').value, 10);
-    if (diff === 0)      { linhas = 9;  colunas = 9;  bombas = 10; }
+    if (diff === 0) { linhas = 9; colunas = 9; bombas = 10; }
     else if (diff === 1) { linhas = 16; colunas = 16; bombas = 40; }
-    else                 { linhas = 16; colunas = 30; bombas = 99; }
+    else { linhas = 16; colunas = 30; bombas = 99; }
 
     gerarTabela(linhas, colunas);
     gerarBombas();

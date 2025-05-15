@@ -1,0 +1,188 @@
+* {
+    font-family: Verdana, sans-serif;
+    margin: 0;
+
+    
+}
+
+body {
+ 
+    text-align: center;
+    background-color: #4abffc;
+}
+.menu {
+    background-color: #4a752c;
+    padding: 3px 0;
+}
+
+.menu-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px; 
+}
+.logo img {
+    width: 150px; 
+    height: auto; 
+    padding-left: 10px;
+    margin: 10px;
+}
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px; 
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px; 
+    padding: 6px 50px;
+}
+
+nav ul li a:hover {
+    background-color: #af4c4c;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .logo img {
+        width: 50px; 
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav ul li {
+        margin: 10px 0;
+    }
+}
+h1 {
+    margin-bottom: 0.5em;
+}
+
+#medidasContainer {
+    display: flex;
+    position: relative;
+    justify-content: center; /* Garante que a tabela e os controles fiquem centralizados */
+}
+
+.Controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    margin-right: 20vw;
+    top: 6rem;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+td,
+th {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #397500;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.axis-label {
+    background-color: #E2C19F;
+    font-weight: bold;
+}
+
+.axis {
+    background-color: #7db62d;
+}
+
+.cell.blocked {
+    background-color: #8ECC38;
+    cursor: default;
+}
+
+.cell.revealed {
+    background-color: #eccdae;
+}
+
+.cell.flag {
+    background-color: #adf051;
+    cursor: default;
+}
+
+.axis-horizontal {
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.axis-vertical {
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+.n1 {
+    color: blue;
+}
+
+.n2 {
+    color: green;
+}
+
+.n3 {
+    color: red;
+}
+
+.n4 {
+    color: navy;
+}
+
+.n5 {
+    color: maroon;
+}
+
+.n6 {
+    color: darkgoldenrod;
+}
+
+.n7 {
+    color: black;
+}
+
+.n8 {
+    color: gray;
+}
+
+.controls {
+    margin-top: 1.5em;
+}
+
+.controls label,
+.controls input,
+.controls select,
+.controls button {
+    margin: 0 0.3em;
+    font-size: 1em;
+}
+
+img {
+    margin-bottom: 10px; 
+}
+#cronometro {
+    font-size: 1.2em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #3b5713;
+}

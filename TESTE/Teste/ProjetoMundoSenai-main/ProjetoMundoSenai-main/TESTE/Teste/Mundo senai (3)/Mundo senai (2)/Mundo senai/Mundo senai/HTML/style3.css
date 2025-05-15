@@ -1,0 +1,80 @@
+
+body {
+    font-family: 'Arial', sans-serif; 
+    background-image: url("imagenss/DUQUESA.png");
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.menu {
+    background-color: #4a752c;
+    padding: 0px 0;
+}
+
+.menu-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px; 
+}
+.logo img {
+    width: 150px; 
+    height: auto;
+    padding-top: 0px;
+    
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px; 
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px; 
+    padding: 6px 50px;
+}
+
+nav ul li a:hover {
+    background-color: #af4c4c;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .logo img {
+        width: 50px; 
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center; 
+    }
+    
+    nav ul li {
+        margin: 10px 0;
+    }
+}
+
+
+img {
+    width: 150px;
+    height: 150px; 
+    display: block;
+    margin: 20px auto;
+}
+
+
+p {
+    font-size: 18px;
+    color: #4a752c; 
+    margin: 10px 0; 
+}
+

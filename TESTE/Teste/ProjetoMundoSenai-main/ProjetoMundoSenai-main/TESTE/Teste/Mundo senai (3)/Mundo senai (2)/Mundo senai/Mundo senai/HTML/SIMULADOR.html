@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Campo Minado Cartesiano</title>
+    <link rel="stylesheet" href="./SIMULADOR.css">
+    <script defer src="./SIMULADOR.js"></script>
+</head>
+
+<body>
+
+    <div class="menu">
+        <div class="menu-content">
+            <!-- Logo dentro do menu -->
+            <div class="logo">
+                <img src="imagenss/logo.PNG" alt="Logo da Empresa">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" target="_blank">HOME</a></li>
+                    <li><a href="SOBRE.html" target="_blank">SOBRE</a></li>
+                    <li><a href="SIMULADOR.html" target="_blank">SIMULADOR</a></li>
+                    <li><a href="SITUAÇÃO DE APRENDIZAGEM.html" target="_blank">SITUAÇÃO DE APRENDIZAGEM</a></li>
+                    <li><a href="EQUIPE.html" target="_blank">EQUIPE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <img src="imagenss/mano.jpeg" alt="" height="102" width="400">
+
+    <div id="cronometro">Tempo: 0s</div>
+
+    <div id="medidasContainer">
+        <table id="tabela"></table>
+
+        <div class="Controles">
+            <label for="inputY">X:</label>
+            <input type="number" id="inputY" value="0" />
+            <br>
+            <label for="inputX">Y:</label>
+            <input type="number" id="inputX" value="0" />
+            <br>
+            <button id="jogar">Jogar</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label for="dificuldade">Dificuldade:</label>
+        <select id="dificuldade">
+            <option value="0" selected>Fácil (9×9)</option>
+            <option value="1">Intermediário (16×16)</option>
+            <option value="2">Difícil (16×30)</option>
+        </select>
+
+        <label for="acao">Ação:</label>
+        <select id="acao">
+            <option value="revelar" selected>Revelar</option>
+            <option value="bandeira">Bandeira</option>
+        </select>
+    </div>
+</body>
+
+</html>
+</body>
+
+</html>
